@@ -1,4 +1,5 @@
 from pypdf import PdfReader # type:ignore
+from langchain_text_splitters import RecursiveCharacterTextSplitter #type:ignore
 
 def read_pdf(file_path:str)->str:
     reader=PdfReader(file_path)
@@ -15,4 +16,12 @@ def read_pdf(file_path:str)->str:
 
     return text
 
+def create_chunk(text:str):
+
+    splitter=RecursiveCharacterTextSplitter(
+        chunk_size=500,
+        chunk_overlap=100
+    )
+
+    return splitter.split_text(text)
 

@@ -1,7 +1,7 @@
 import chromadb #type:ignore
 from .rag import read_pdf , create_chunk
 from .embeddings import create_embed
-
+from sentence_transformers import SentenceTransformer #type: ignore
 client = chromadb.Client()
 
 collection = client.get_or_create_collection(
@@ -32,4 +32,18 @@ def get_all():
 def count():
 
     return collection.count()
+
+
+######### creating user query ##############
+
+def semantic_search(query:str , k: int =3):
+
+    query_embedding = model.encode(query).tolist() #type: ignore
+
+    result = collection.query(
+        query_embedding=[query_embedding],
+        n_results=k
+    )
+
+    return result["documents"][0]
 

@@ -6,5 +6,7 @@ def create_embed(text:str):
 
     embedding = model.encode(text)
 
+    print(len(embedding))
+
     return embedding
 

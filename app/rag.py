@@ -8,6 +8,8 @@ def read_pdf(file_path:str)->str:
     for page in reader.pages:
         page_text=page.extract_text()
 
+        print(page_text)
+
         if page_text:
             text+=page_text + "\n"
 

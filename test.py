@@ -1,6 +1,6 @@
 from app.rag import read_pdf , create_chunk 
 from app.embeddings import create_embed
-from app.vector_store import store_embed , get_all , count
+from app.vector_store import store_embed , get_all , count , semantic_search
 
 # text = read_pdf("documents/python.pdf")
 
@@ -44,3 +44,10 @@ store_embed(chunk , embed)
 print(get_all) # print(collection.get(include=["documents","embeddings"]))
 
 print(count)
+
+result = semantic_search("what programming langauge we are discussing about and how it is useful")
+
+for i , doc in enumerate(result,1):
+    print(f"\nresults {i}\n")
+
+    print(doc)

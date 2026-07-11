@@ -1,6 +1,6 @@
 import chromadb #type:ignore
-from rag import read_pdf , create_chunk
-from embeddings import create_embed
+from .rag import read_pdf , create_chunk
+from .embeddings import create_embed
 
 client = chromadb.Client()
 
@@ -17,7 +17,7 @@ def store_embed(chunks , embedding):
     collection.add(
         ids=ids,
         documents=chunks,
-        embeddings=embeddings
+        embeddings=embedding
     )
 
 ################### return all embeddings ########################

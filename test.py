@@ -41,6 +41,6 @@ embed = create_embed(chunk)
 
 store_embed(chunk , embed)
 
-print(get_all)
+print(get_all) # print(collection.get(include=["documents","embeddings"]))
 
 print(count)

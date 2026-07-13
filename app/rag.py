@@ -37,7 +37,7 @@ def index_pdf(file_path:str):
 
     collection.add(
 
-        ids=[str(ids) for ids in len(chunks)],
+        ids=[str(ids) for ids in range(len(chunks))],
         documents=chunks,
         embeddings=embeddings
 

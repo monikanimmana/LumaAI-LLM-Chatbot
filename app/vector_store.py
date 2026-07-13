@@ -1,8 +1,7 @@
 import chromadb #type:ignore
-from .rag import read_pdf , create_chunk
 from .embeddings import create_embed
 
-client = chromadb.Client()
+client = chromadb.PersistentClient()
 
 collection = client.get_or_create_collection(
     name="documents"

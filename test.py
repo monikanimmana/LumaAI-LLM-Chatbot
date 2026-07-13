@@ -1,6 +1,6 @@
-from app.rag import read_pdf , create_chunk 
-from app.embeddings import create_embed
-from app.vector_store import store_embed , get_all , count , semantic_search
+from app.rag import read_pdf , create_chunk , index_pdf
+from app.embeddings import create_embed 
+from app.vector_store import semantic_search
 
 # text = read_pdf("documents/python.pdf")
 
@@ -33,21 +33,29 @@ from app.vector_store import store_embed , get_all , count , semantic_search
 # print(embedding)
 
 
-sentence = read_pdf("documents/python.pdf")
+# sentence = read_pdf("documents/python.pdf")
 
-chunk = create_chunk(sentence)
+# chunk = create_chunk(sentence)
 
-embed = create_embed(chunk)
+# embed = create_embed(chunk)
 
-store_embed(chunk , embed)
+# store_embed(chunk , embed)
 
-print(get_all) # print(collection.get(include=["documents","embeddings"]))
+# print(get_all) # print(collection.get(include=["documents","embeddings"]))
 
-print(count)
+# print(count)
 
-result = semantic_search("what programming langauge we are discussing about and how it is useful")
+# result = semantic_search("what programming langauge we are discussing about and how it is useful")
 
-for i , doc in enumerate(result,1):
-    print(f"\nresults {i}\n")
+# for i , doc in enumerate(result,1):
+#     print(f"\nresults {i}\n")
 
-    print(doc)
+#     print(doc)
+
+index_pdf("documents/python.pdf")
+
+question_ask = input("ASK: ")
+
+result = semantic_search(question_ask)
+
+print(result)

@@ -1,5 +1,7 @@
 from pypdf import PdfReader # type:ignore
 from langchain_text_splitters import RecursiveCharacterTextSplitter #type:ignore
+from .embeddings import create_embed
+from .vector_store import collection
 
 def read_pdf(file_path:str)->str:
     reader=PdfReader(file_path)
@@ -24,4 +26,22 @@ def create_chunk(text:str):
     )
 
     return splitter.split_text(text)
+
+def index_pdf(file_path:str):
+
+    text=read_pdf(file_path)
+
+    chunks=create_chunk(text)
+
+    embeddings= [create_embed(chunk).tolist() for chunk in chunks]
+
+    collection.add(
+
+        ids=[str(ids) for ids in len(chunks)],
+        documents=chunks,
+        embeddings=embeddings
+
+    )
+
+    print(f"stored {len(chunks)} chunks")
 

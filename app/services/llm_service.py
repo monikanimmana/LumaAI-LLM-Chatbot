@@ -1,4 +1,5 @@
 import ollama #type:ignore
+from ..vector_store import semantic_search
 
 chat_history=[
     {
@@ -11,23 +12,25 @@ chat_history=[
 
 def stream_llm(question:str,content:str):
 
-    prompt= f"""
+    messages=chat_history.copy()
 
-    context:{content}
-    question:{question}
-    answer:
-    """
-
-    chat_history.append(
+    messages.append(
         {
             "role":"user",
-            "content":prompt
+            "content": f"""
+
+            "context":{content},
+            "question":{question},
+
+            answer=
+            """
         }
     )
+    
 
     stream = ollama.chat(
         model="qwen3",
-        messages=chat_history,
+        messages=messages,
         stream=True
     )
 
@@ -38,11 +41,24 @@ def stream_llm(question:str,content:str):
         answer+=text
         yield text
 
+ # Store only the conversation, not the retrieved context
+    chat_history.append(
+        {
+            "role":"user",
+            "content":question
+        }
+    )
+
     chat_history.append(
         {
             "role":"assistant",
             "content":answer
         }
     )
+
+def chat(question: str):
+    chunks = semantic_search(question)
+    context = "\n\n".join(chunks)
+    return stream_llm(question, context)
 
    

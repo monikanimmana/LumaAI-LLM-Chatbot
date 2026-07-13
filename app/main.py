@@ -25,14 +25,14 @@ async def upload_pdf(file:UploadFile = File(...)):
     return {"message": "PDF indexed successfully"}
 
 @app.post('/chat')
-def chat(request: ChatRequest):
+def chat_endpoint(request: ChatRequest):
 
-    chunks = semantic_search(request.message)
+    chunks = semantic_search(request.prompt)
 
     context = "\n\n".join(chunks)
 
     return StreamingResponse(
-        stream_llm(request.message , context),
+        stream_llm(request.prompt , context),
         media_type="text/plain"
     )
 

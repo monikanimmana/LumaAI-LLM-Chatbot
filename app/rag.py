@@ -2,6 +2,7 @@ from pypdf import PdfReader # type:ignore
 from langchain_text_splitters import RecursiveCharacterTextSplitter #type:ignore
 from .embeddings import create_embed
 from .vector_store import collection
+import uuid
 
 def read_pdf(file_path:str)->str:
     reader=PdfReader(file_path)
@@ -35,12 +36,23 @@ def index_pdf(file_path:str):
 
     embeddings= [create_embed(chunk).tolist() for chunk in chunks]
 
+    metadatas = [
+        {
+            "source":file_path,
+            "chunk":i
+        }
+        for i in range(len(chunks))
+    ]
+
     collection.add(
 
-        ids=[str(ids) for ids in range(len(chunks))],
+        ids=[str(uuid.uuid4()) for _ in chunks],
         documents=chunks,
-        embeddings=embeddings
+        embeddings=embeddings,
+        metadatas=metadatas
 
     )
+
+    print(f"Stored {len(chunks)} chunks.")
 
 

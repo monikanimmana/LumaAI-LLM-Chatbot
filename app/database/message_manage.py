@@ -13,15 +13,18 @@ def save_messages(session_id , role , content):
 
     cursor.close()
 
-def get_messages(session_id:str):
+def get_messages(session_id):
     cursor=conn.cursor()
 
     cursor.execute(
         """
-        SELECT role , content FROM messages WHERE session_id = %s ORDER BY created_by
+        SELECT role , content 
+        FROM messages 
+        WHERE session_id = %s 
+        ORDER BY created_at
     
-    """,
-    (session_id)
+        """,
+    (session_id,)
     )
 
     rows = cursor.fetchall()

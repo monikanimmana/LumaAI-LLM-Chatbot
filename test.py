@@ -65,7 +65,14 @@ from app.services.llm_service import stream_llm
 #     print(token , end=" ",flush=True)
 
 
-from app.database.database import conn
 
-print("database connected!")
+from app.database.session_manage import create_session
+from app.database.message_manage import save_messages
+
+session_id = create_session()
+
+save_messages(session_id,"assistant","hello")
+save_messages(session_id,"user","what is python?")
+
+print("saved messages")
 

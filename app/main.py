@@ -7,7 +7,8 @@ from .schemas import ChatRequest
 from .vector_store import semantic_search
 from .services.llm_service import stream_llm , chat
 from fastapi.responses import StreamingResponse #type:ignore
- 
+from .database.session_manage import create_session
+
 app=FastAPI()
 
 app.include_router(router)
@@ -34,5 +35,11 @@ def chat_endpoint(request: ChatRequest):
         media_type="text/plain"
     )
 
+@app.post("/new-chat")
+def new_chat():
+    session_id= create_session()
 
+    return {
+        "session_id":session_id
+    }
 
